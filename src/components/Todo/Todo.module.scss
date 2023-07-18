@@ -1,0 +1,46 @@
+.Todo{
+    margin-top: 60px;
+    gap: 15px   ;
+    display: flex;
+    flex-wrap: wrap;
+
+    .singletodo {
+        width: 100px;
+        height: 100px;
+        border: 1px solid;
+        padding: 12px;
+        border-radius: 12px;
+        &:hover{
+            background-color: whitesmoke;
+        }
+
+    }
+
+    .completed{
+        background-color: rgba(18, 142, 18, 0.367);
+    }
+
+    .uncompleted{
+        background-color: rgba(150, 8, 8, 0.395);
+    }
+    .newTask{
+      font-size: large;
+      position:absolute;
+      left: 0%;
+      top: 30%;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+    
+        align-items: center;
+       
+    }
+    .inputNewTask{
+        height: 40px;
+        background-color: aliceblue;
+    }
+    .inputBtn{
+        height: 40px;
+        background-color: aliceblue;
+    }
+}

@@ -1,0 +1,29 @@
+.Navbar {
+  width: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  background-color: rgba(216, 216, 216, 0.434);
+
+  height: 60px;
+  border-radius: 12px;
+  position: fixed;
+  top: 0;
+
+  .Plus {
+    width: 20px;
+
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid;
+    padding: 8px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.45s;
+    &:hover {
+      background-color: whitesmoke;
+    }
+  }
+}
