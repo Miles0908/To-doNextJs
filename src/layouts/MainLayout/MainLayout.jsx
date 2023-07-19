@@ -6,10 +6,11 @@ const MainLayout = ({ children }) => {
   return (
     <div className={styles.MainLayout}>
       <Navbar />
-
-    
-
+ 
       {children}
+    
+      
+    
     </div>
   );
 };

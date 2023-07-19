@@ -27,6 +27,7 @@ export default function Home() {
       <MainContext.Provider value={{state , dispatch}}>
         <MainLayout>
           <Todo/>
+          
         </MainLayout>
       </MainContext.Provider>
       

@@ -5,11 +5,12 @@ import { TodoList } from "@/state";
 import { useState } from "react";
 
 import styles from "./Todo.module.scss";
-console.log(TodoList);
 
 const Todo = () => {
   const { state, dispatch } = useContext(MainContext);
   const [newTodo, setNewTodo] = useState("");
+  const [isDragging, setIsDragging] = useState(false);
+
 
   const handleInputChange = (e) => {
     setNewTodo(e.target.value);
@@ -30,31 +31,30 @@ const Todo = () => {
       });
 
       setNewTodo("");
-      console.log("click");
+      console.log({ newTask });
     }
+  };
+
+  const onConfirmTodo = (id) => {
+    dispatch({
+      type: "SET_TODO_COMPLETED",
+      payload: id,
+    });
+  };
+
+  const onHandleDelete = (id) => {
+    dispatch({ type: "REMOVE_TODO", payload: id });
+   
+  };
+
+  const onHandleDrag = (e) => {
+    e.target.style.display = "none";
+    e.target.style.content = "🗑️";
   };
 
   return (
     <div className={styles.Todo}>
-      {TodoList.map((todo) => {
-        const todoIsDo = todo.isDo ? styles.completed : styles.uncompleted;
-        return (
-          <p className={`${styles.singletodo} ${todoIsDo}`} key={todo.id}>
-            {todo.todo}
-          </p>
-        );
-      })}
-
       <form action="submit" className={styles.newTask}>
-        {state.TodoList.map((todo) => {
-          const todoIsDo = todo.isDo ? styles.completed : styles.uncompleted;
-          return (
-            <p className={`${styles.singletodo} ${todoIsDo}`} key={todo.id}>
-              {todo.todo}
-            </p>
-          );
-        })}
-
         <input
           className={styles.inputNewTask}
           type="text"
@@ -65,8 +65,46 @@ const Todo = () => {
           +
         </button>
       </form>
+      {state.TodoList.map((todo) => {
+        return (
+          <p
+            onDragEnd={onHandleDelete}
+            onDrag={onHandleDrag}
+            draggable="true"
+            className={`${styles.singletodo} ${
+              todo.isDo ? styles.completed : styles.uncompleted
+            }`}
+            key={todo.id}
+          >
+            {todo.todo}
+
+            {
+              <div
+                className={styles.confirm}
+                onClick={() => onConfirmTodo(todo.id)}
+              >
+                {todo.isDo ? "Click for remove " : "Click for confirm "}
+                {todo.isDo ? "❌" : "✅"}
+              </div>
+            }
+          </p>
+        );
+      })}
     </div>
   );
 };
 
 export default Todo;
+
+
+/*         const todoIsDo = todo.isDo ? styles.completed : styles.uncompleted;
+
+{/* 
+{TodoList.map((todo) => {
+        const todoIsDo = todo.isDo ? styles.completed : styles.uncompleted;
+        return (
+          <p className={`${styles.singletodo} ${todoIsDo}`} key={todo.id}>
+            {todo.todo}
+          </p>
+        );
+      })} */

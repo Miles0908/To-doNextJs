@@ -7,7 +7,7 @@ export const initialState = {
   isLogged: true,
   TodoList: [],
 };
-
+/* 
 export const TodoList = [
   {
     id: 1,
@@ -40,3 +40,4 @@ export const TodoList = [
     isDo: true,
   },
 ];
+ */
