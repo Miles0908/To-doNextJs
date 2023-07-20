@@ -3,9 +3,9 @@ import { createContext } from "react";
 export const MainContext = createContext({});
 
 export const initialState = {
-  username: "Claudio",
-  isLogged: true,
+
   TodoList: [],
+  username: "",
 };
 /* 
 export const TodoList = [

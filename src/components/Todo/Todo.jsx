@@ -3,20 +3,22 @@ import { useContext } from "react";
 
 import { TodoList } from "@/state";
 import { useState } from "react";
+import { collection, addDoc, updateDoc } from "firebase/firestore";
+import { doc, deleteDoc } from "firebase/firestore";
 
 import styles from "./Todo.module.scss";
+import { db } from "@/plugins/firebase";
 
 const Todo = () => {
   const { state, dispatch } = useContext(MainContext);
   const [newTodo, setNewTodo] = useState("");
   const [isDragging, setIsDragging] = useState(false);
 
-
   const handleInputChange = (e) => {
     setNewTodo(e.target.value);
   };
 
-  const addTodo = (e) => {
+  const addTodo = async (e) => {
     e.preventDefault();
 
     if (newTodo.trim() !== "") {
@@ -30,21 +32,29 @@ const Todo = () => {
         payload: newTask,
       });
 
+      await addDoc(collection(db, "TodoList"), newTask);
+
       setNewTodo("");
       console.log({ newTask });
     }
   };
 
-  const onConfirmTodo = (id) => {
+  const onConfirmTodo = async (id) => {
     dispatch({
       type: "SET_TODO_COMPLETED",
       payload: id,
     });
+    await updateDoc(doc(db, "TodoList", id), {
+      isDo: !isDo,
+    });
   };
 
-  const onHandleDelete = (id) => {
+  const onHandleDelete = async (id) => {
     dispatch({ type: "REMOVE_TODO", payload: id });
-   
+
+    try {
+      await deleteDoc(doc(db, "TodoList", id));
+    } catch (e) {}
   };
 
   const onHandleDrag = (e) => {
@@ -95,7 +105,6 @@ const Todo = () => {
 };
 
 export default Todo;
-
 
 /*         const todoIsDo = todo.isDo ? styles.completed : styles.uncompleted;
 
