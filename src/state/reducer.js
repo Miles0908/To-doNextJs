@@ -1,14 +1,14 @@
 export const mainReducer = (state, action) => {
   switch (action.type) {
-    case "SET_LOGIN":
+    case "SET_DATABASE":
       return {
         ...state,
-        isLogged: true,
+        TodoList: action.payload,
       };
-    case "SET_LOGOUT":
+    case "SET_USERNAME":
       return {
         ...state,
-        isLogged: false,
+        username: action.payload,
       };
     case "ADD_TODO":
       return {
@@ -19,17 +19,14 @@ export const mainReducer = (state, action) => {
       return {
         ...state,
         TodoList: state.TodoList.map((todo) =>
-          todo.id === action.payload
-            ? { ...todo, isDo: !todo.isDo }
-            : todo
+          todo.id === action.payload ? { ...todo, isDo: !todo.isDo } : todo
         ),
       };
-      case "REMOVE_TODO":
-        return {
-          ...state,
-          TodoList: state.TodoList.filter((todo) => todo.id !== action.payload),
-        };
-  
+    case "REMOVE_TODO":
+      return {
+        ...state,
+        TodoList: state.TodoList.filter((todo) => todo.id !== action.payload),
+      };
 
     default:
       console.log(state);
